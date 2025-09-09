@@ -1,9 +1,13 @@
 open class Producto(val nombre: String,
-                    var precio: Double,
-                    var esPremium:Boolean,
-                    var tiempoPreparacion: Int) {
+                    val precioInicial: Int,
+                    val categoria: String,
+                    val tiempoPreparacionMin: Int) {
+
+    open fun precioFinal(): Int {
+       return precioInicial
+    }
 
     open fun mostrarInfo(): String {
-        return "Producto(nombre='$nombre', precio=$precio)"
+        return "$nombre: $${"%,d".format(precioInicial)}"
     }
 }

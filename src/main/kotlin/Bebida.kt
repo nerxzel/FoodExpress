@@ -1,10 +1,18 @@
-class Bebida(nombre:String,
-             precio:Double,
-             esPremium:Boolean,
-             tiempoPreparacion: Int,
-             val tamanho:String) :Producto(nombre, precio, esPremium, tiempoPreparacion) {
+import kotlin.math.roundToInt
+
+class Bebida(nombre: String,
+             precioInicial: Int,
+             tiempoPreparacionMin: Int,
+             val tamanho: TamanhoBebida) :Producto(nombre,
+                                                  precioInicial,
+                                                  categoria = "Bebida",
+                                                  tiempoPreparacionMin) {
 
     override fun mostrarInfo(): String {
-        return "$nombre ($tamanho): \$${"%,d".format(precio)}"
+        return "$nombre ($tamanho): $${"%,d".format(precioFinal())}"
+    }
+
+    override fun precioFinal(): Int {
+        return (precioInicial * tamanho.multiplicador).roundToInt()
     }
 }
