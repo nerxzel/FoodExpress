@@ -63,7 +63,7 @@ class GestorPedidos {
                     agregarAlCarro(producto)
                 }
             } catch (e: IllegalArgumentException) {
-                println("⚠ ${e.message}")
+                println("${e.message}")
                 continue
             }
 
