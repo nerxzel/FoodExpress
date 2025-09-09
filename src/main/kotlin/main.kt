@@ -10,8 +10,10 @@ fun main()  {
 
     print("Ingrese su tipo de cliente (regular, vip, premium): ")
     print("")
-    val tipoCliente = readLine() ?: "regular"
-
+    var tipoCliente = readLine()
+    if (tipoCliente.isNullOrBlank()) {
+        tipoCliente = "regular"
+    }
     GlobalScope.launch {
 
         gestor.procesarPedido()

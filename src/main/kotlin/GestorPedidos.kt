@@ -36,19 +36,40 @@ class GestorPedidos {
     }
 
     fun seleccionarProductos() {
-        println("")
-        print("Seleccione productos(números separados por coma): ")
-        val input = readLine() ?: ""
+        while (true){
 
-        val idsSeleccionados = input.split(",")
-            .mapNotNull { it.trim().toIntOrNull() }
+            println("")
+            print("Seleccione productos(números separados por coma): ")
+            val selector = readLine() ?: ""
 
-        idsSeleccionados.forEach { id ->
-            inventarioMapa[id]?.let { producto ->
-                agregarAlCarro(producto)
-            } ?: println("⚠ Producto con id $id no existe")
+            val idsSeleccionados = selector.split(",").map { it.trim().toIntOrNull() }
+
+            if (idsSeleccionados.any {it == null}) {
+                println("Por favor, ingrese los números en el formato solicitado (separados por coma)")
+                continue
+            }
+
+            val ids = idsSeleccionados.filterNotNull()
+
+            if (ids.any { it <= 0}){
+                println("Por favor, no ingrese ids negativos")
+                continue
+            }
+
+            try {
+                ids.forEach { id ->
+                    val producto = inventarioMapa[id]
+                        ?: throw IllegalArgumentException("Por favor, seleccione un producto del menú")
+                    agregarAlCarro(producto)
+                }
+            } catch (e: IllegalArgumentException) {
+                println("⚠ ${e.message}")
+                continue
+            }
+
+            break
+            }
         }
-    }
 
     fun mostrarPedido(tipoCliente: String) {
         println("\n=== RESUMEN DEL PEDIDO ===")
